@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
 import '../services/auth_service.dart';
 import '../services/google_auth_service.dart';
+import 'card_options_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (success) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+          MaterialPageRoute(builder: (_) => const CardOptionsScreen()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+          MaterialPageRoute(builder: (_) => const CardOptionsScreen()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -135,8 +135,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     const primaryBlue = Color(0xFF112D6B);
+    const signupColor= Color(0xDD4277C1);
     const darkBlue = Color(0xFF0D1B4C);
     const lightBg = Color(0xFFF5F7FB);
+
+    final activeColor = isLogin ? primaryBlue : signupColor;
 
     return Scaffold(
       backgroundColor: lightBg,
@@ -233,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     padding: const EdgeInsets.symmetric(vertical: 14),
                                     decoration: BoxDecoration(
                                       color: isLogin
-                                          ? primaryBlue
+                                          ? activeColor
                                           : Colors.transparent,
                                       borderRadius: BorderRadius.circular(18),
                                     ),
@@ -243,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(
                                         color: isLogin
                                             ? Colors.white
-                                            : primaryBlue,
+                                            : activeColor,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 15,
                                       ),
@@ -263,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     padding: const EdgeInsets.symmetric(vertical: 14),
                                     decoration: BoxDecoration(
                                       color: !isLogin
-                                          ? primaryBlue
+                                          ? activeColor
                                           : Colors.transparent,
                                       borderRadius: BorderRadius.circular(18),
                                     ),
@@ -273,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(
                                         color: !isLogin
                                             ? Colors.white
-                                            : primaryBlue,
+                                            : activeColor,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 15,
                                       ),
@@ -389,7 +392,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: submitForm,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryBlue,
+                              backgroundColor: activeColor,
                               foregroundColor: Colors.white,
                               elevation: 0,
                               shape: RoundedRectangleBorder(

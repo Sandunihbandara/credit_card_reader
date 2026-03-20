@@ -1,7 +1,7 @@
+import 'package:credit_card_reader/screens/card_options_screen.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'dart:async';
-import 'home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -42,7 +42,23 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(const Duration(seconds: 3), () async {
       if (!mounted) return;
 
-      final user = FirebaseAuth.instance.currentUser;
+      Future.delayed(const Duration(seconds: 3), () {
+        if (!mounted) return;
+
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 700),
+            pageBuilder: (_, __, ___) => const LoginScreen(),
+            transitionsBuilder: (_, animation, __, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          ),
+        );
+      });
 
       if (!mounted) return;
 
@@ -50,8 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
         context,
         PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 700),
-          pageBuilder: (_, __, ___) =>
-          user != null ? const HomeScreen() : const LoginScreen(),
+          pageBuilder: (_, __, ___) => const LoginScreen(),
           transitionsBuilder: (_, animation, __, child) {
             return FadeTransition(
               opacity: animation,
