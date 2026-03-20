@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
+import '../services/auth_service.dart';
+import '../services/google_auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,22 +32,105 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void submitForm() {
-    if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+  void submitForm() async{
+    if (!_formKey.currentState!.validate()) return;
+
+    if (isLogin) {
+      final hasAccount = await AuthService.hasAccount();
+
+      if (!hasAccount) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No account found. Please sign up first.'),
+          ),
+        );
+        return;
+      }
+
+      final success = await AuthService.login(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (!mounted) return;
+
+      if (success) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Invalid email or password'),
+          ),
+        );
+      }
+    } else {
+      await AuthService.signUp(
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Account created successfully. Please login.'),
+        ),
+      );
+
+      setState(() {
+        isLogin = true;
+        nameController.clear();
+        passwordController.clear();
+        confirmPasswordController.clear();
+      });
+    }
+  }
+
+
+
+  void googleLogin() async {
+    try {
+      final googleAuthService = GoogleAuthService();
+      final userCredential = await googleAuthService.signInWithGoogle();
+
+      if (!mounted) return;
+
+      if (userCredential != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Welcome ${userCredential.user?.displayName ?? 'User'}',
+            ),
+          ),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Google sign-in cancelled'),
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Google sign-in failed: $e'),
+        ),
       );
     }
   }
 
-  void googleLogin() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Google login UI added. Real Google sign-in can be added later.'),
-      ),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +160,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 10),
-                  Image.asset(
+                  const SizedBox(height: 15),
+                  Align(
+                    alignment: const Alignment(-0.1, 0),
+                    child: Image.asset(
                     'assets/images/nfc.png',
-                    width: 72,
+                    width: 92,
                   ),
-                  const SizedBox(height: 10),
+                  ),
+                  const SizedBox(height: 5),
                   const Text(
                     'CardVault',
                     style: TextStyle(

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "645105799293",
+    "project_id": "cardvault-519b8",
+    "storage_bucket": "cardvault-519b8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645105799293:android:ab769c6aa7a4d2e7386114",
+        "android_client_info": {
+          "package_name": "com.example.credit_card_reader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645105799293-gk013dtkapfsj61m41bi9376593jafcn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.credit_card_reader",
+            "certificate_hash": "5ecc304b24b25b984fc1762d5af968796afa3a0a"
+          }
+        },
+        {
+          "client_id": "645105799293-q65gp61qk1o81ls3qlru0s5ncgsav8bl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwrNGbij9XFqtt7YUkl4s5zpls1FbLYQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645105799293-q65gp61qk1o81ls3qlru0s5ncgsav8bl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
