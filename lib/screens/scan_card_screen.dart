@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../models/card_model.dart';
+import '../services/card_storage.dart';
 
 class ScanCardScreen extends StatefulWidget {
   const ScanCardScreen({super.key});
@@ -40,12 +42,21 @@ class _ScanCardScreenState extends State<ScanCardScreen>
       isScanning = false;
     });
 
+    CardStorage.addCard(
+      CardModel(
+        number: "9999 8888 7777 6666",
+        name: "NFC USER",
+        expiry: "08/30",
+        type: "NFC",
+      ),
+    );
+
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('Card Detected'),
         content: const Text(
-          'Demo scan completed successfully.\n\nIn the next step, you can connect real NFC reading.',
+          'Demo scan completed successfully.',
         ),
         actions: [
           TextButton(

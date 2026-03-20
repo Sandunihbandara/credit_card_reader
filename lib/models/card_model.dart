@@ -1,31 +1,13 @@
 class CardModel {
-  final String holderName;
-  final String cardNumber;
-  final String expiryDate;
-  final String cardType;
+  final String number;
+  final String name;
+  final String expiry;
+  final String type; // NFC | CAMERA | VIRTUAL
 
   CardModel({
-    required this.holderName,
-    required this.cardNumber,
-    required this.expiryDate,
-    required this.cardType,
+    required this.number,
+    required this.name,
+    required this.expiry,
+    required this.type,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'holderName': holderName,
-      'cardNumber': cardNumber,
-      'expiryDate': expiryDate,
-      'cardType': cardType,
-    };
-  }
-
-  factory CardModel.fromMap(Map<String, dynamic> map) {
-    return CardModel(
-      holderName: map['holderName'],
-      cardNumber: map['cardNumber'],
-      expiryDate: map['expiryDate'],
-      cardType: map['cardType'],
-    );
-  }
 }

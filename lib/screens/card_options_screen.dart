@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'scan_card_screen.dart';
 import 'add_card_screen.dart';
 import 'camera_scan_screen.dart';
+import 'card_list_screen.dart';
+
 
 class CardOptionsScreen extends StatelessWidget {
   const CardOptionsScreen({super.key});
@@ -20,6 +22,20 @@ class CardOptionsScreen extends StatelessWidget {
         elevation: 0,
         title: const SizedBox(),
         iconTheme: const IconThemeData(color: primaryBlue),
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.list),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const CardListScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
 
       body: Padding(
